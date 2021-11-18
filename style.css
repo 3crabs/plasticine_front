@@ -14,5 +14,11 @@ h1 {
 }
 
 h3 {
-    padding-top: 30px;
+    padding-top: 20px;
+    color: #676767;
+    font-size: 25px;
+}
+
+.hidden_block {
+    display: none;
 }

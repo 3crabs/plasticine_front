@@ -63,13 +63,13 @@
     </div>
 </nav>
 
-<div class="container">
+<div v-bind:class="{ hidden_block: current_menu_item !== 'schedule' }" class="container">
     <div class="row justify-content-md-center">
         <div class="col-sm-8">
 
             <h1>Расписание</h1>
 
-            <h2>Понедельник</h2>
+            <h3>Понедельник</h3>
             <table>
                 <tr>
                     <div class="card">
@@ -236,6 +236,56 @@
                     </div>
                 </tr>
             </table>
+
+        </div>
+    </div>
+</div>
+
+<div v-bind:class="{ hidden_block: current_menu_item !== 'groups' }" class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-8">
+
+            <h1>Группы</h1>
+
+        </div>
+    </div>
+</div>
+
+<div v-bind:class="{ hidden_block: current_menu_item !== 'subjects' }" class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-8">
+
+            <h1>Дисциплины</h1>
+
+        </div>
+    </div>
+</div>
+
+<div v-bind:class="{ hidden_block: current_menu_item !== 'teachers' }" class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-8">
+
+            <h1>Учителя</h1>
+
+        </div>
+    </div>
+</div>
+
+<div v-bind:class="{ hidden_block: current_menu_item !== 'students' }" class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-8">
+
+            <h1>Ученики</h1>
+
+        </div>
+    </div>
+</div>
+
+<div v-bind:class="{ hidden_block: current_menu_item !== 'places' }" class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-8">
+
+            <h1>Кабинеты</h1>
 
         </div>
     </div>
