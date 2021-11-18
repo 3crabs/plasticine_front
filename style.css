@@ -7,6 +7,12 @@ h1 {
     -webkit-text-fill-color: transparent;
 }
 
+.active {
+    background: linear-gradient(0, #904E95FF, #E96443FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 h3 {
     padding-top: 30px;
 }
