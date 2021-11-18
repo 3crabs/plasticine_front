@@ -96,3 +96,13 @@ h3 {
     width: 100px;
     margin-bottom: 10px;
 }
+
+.lesson-group {
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*top: 0;*/
+    /*color: #676767;*/
+    /*width: 100px;*/
+    /*margin-top: 10px;*/
+    margin-right: 10px;
+}
