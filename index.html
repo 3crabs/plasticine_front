@@ -41,22 +41,22 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a v-on:click="reverseMessage('schedule')"
-                   v-bind:class="{ active: current_menu_item === 'schedule' }"
+                   v-bind:class="{ gradient: current_menu_item === 'schedule' }"
                    class="nav-link" href="#">Расписание</a>
                 <a v-on:click="reverseMessage('groups')"
-                   v-bind:class="{ active: current_menu_item === 'groups' }"
+                   v-bind:class="{ gradient: current_menu_item === 'groups' }"
                    class="nav-link" href="#">Группы</a>
                 <a v-on:click="reverseMessage('subjects')"
-                   v-bind:class="{ active: current_menu_item === 'subjects' }"
+                   v-bind:class="{ gradient: current_menu_item === 'subjects' }"
                    class="nav-link" href="#">Дисциплины</a>
                 <a v-on:click="reverseMessage('teachers')"
-                   v-bind:class="{ active: current_menu_item === 'teachers' }"
+                   v-bind:class="{ gradient: current_menu_item === 'teachers' }"
                    class="nav-link" href="#">Учителя</a>
                 <a v-on:click="reverseMessage('students')"
-                   v-bind:class="{ active: current_menu_item === 'students' }"
+                   v-bind:class="{ gradient: current_menu_item === 'students' }"
                    class="nav-link" href="#">Ученики</a>
                 <a v-on:click="reverseMessage('places')"
-                   v-bind:class="{ active: current_menu_item === 'places' }"
+                   v-bind:class="{ gradient: current_menu_item === 'places' }"
                    class="nav-link" href="#">Кабинеты</a>
             </div>
         </div>
