@@ -19,7 +19,19 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Пластилин</a>
+        <a class="navbar-brand" href="#">
+            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" width="50px" id="blobSvg">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color: rgb(233, 100, 67);"></stop>
+                        <stop offset="100%" style="stop-color: rgb(144, 78, 149);"></stop>
+                    </linearGradient>
+                </defs>
+                <path id="blob"
+                      d="M436,295.5Q392,341,347.5,354Q303,367,261,416Q219,465,163.5,439.5Q108,414,81.5,360.5Q55,307,34.5,244Q14,181,72.5,146.5Q131,112,176.5,83Q222,54,271.5,74Q321,94,379,112Q437,130,458.5,190Q480,250,436,295.5Z"
+                      fill="url(#gradient)"></path>
+            </svg>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,7 +40,10 @@
             <div class="navbar-nav">
                 <a class="nav-link active" href="#">Расписание</a>
                 <a class="nav-link" href="#">Группы</a>
-                <a class="nav-link" href="#">Настройки</a>
+                <a class="nav-link" href="#">Дисциплины</a>
+                <a class="nav-link" href="#">Учителя</a>
+                <a class="nav-link" href="#">Ученики</a>
+                <a class="nav-link" href="#">Кабинеты</a>
             </div>
         </div>
     </div>
