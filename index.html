@@ -38,26 +38,36 @@
                       fill="url(#gradient)"></path>
             </svg>
         </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a v-on:click="reverseMessage('schedule')"
                    v-bind:class="{ gradient: current_menu_item === 'schedule' }"
-                   class="nav-link" href="#">Расписание</a>
+                   class="nav-link" href="#"
+                   data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Расписание</a>
                 <a v-on:click="reverseMessage('groups')"
                    v-bind:class="{ gradient: current_menu_item === 'groups' }"
-                   class="nav-link" href="#">Группы</a>
+                   class="nav-link" href="#"
+                   data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Группы</a>
                 <a v-on:click="reverseMessage('subjects')"
                    v-bind:class="{ gradient: current_menu_item === 'subjects' }"
-                   class="nav-link" href="#">Дисциплины</a>
+                   class="nav-link" href="#"
+                   data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Дисциплины</a>
                 <a v-on:click="reverseMessage('teachers')"
                    v-bind:class="{ gradient: current_menu_item === 'teachers' }"
-                   class="nav-link" href="#">Учителя</a>
+                   class="nav-link" href="#"
+                   data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Учителя</a>
                 <a v-on:click="reverseMessage('students')"
                    v-bind:class="{ gradient: current_menu_item === 'students' }"
-                   class="nav-link" href="#">Ученики</a>
+                   class="nav-link" href="#"
+                   data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Ученики</a>
                 <a v-on:click="reverseMessage('places')"
                    v-bind:class="{ gradient: current_menu_item === 'places' }"
-                   class="nav-link" href="#">Кабинеты</a>
+                   class="nav-link" href="#"
+                   data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Кабинеты</a>
             </div>
         </div>
     </div>
