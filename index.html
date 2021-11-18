@@ -328,7 +328,9 @@
         <div class="col-sm-8">
 
             <h1>Кабинеты</h1>
-            <button class="my_button shadow-box-medium">новый кабинет</button>
+            <button class="my_button shadow-box-medium"
+                    data-bs-toggle="modal" data-bs-target="#addPlacesModal">новый кабинет
+            </button>
             <div class="card lesson shadow-box-medium">
                 <div class="card-body">
                     <span>каб. 100</span>
@@ -337,6 +339,33 @@
             <div class="card lesson shadow-box-medium">
                 <div class="card-body">
                     <span>каб. 101</span>
+                </div>
+            </div>
+
+            <!-- Add Place Modal -->
+            <div class="modal fade" id="addPlacesModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Новый кабинет</h5>
+                            <button type="button" class="my_button shadow-box-medium close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="placeName" class="form-label">Название кабинета</label>
+                                    <input type="text" class="form-control" id="placeName" aria-describedby="placeNameHelp">
+                                    <div id="placeNameHelp" class="form-text">Введите номер или название кабинета</div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="my_button shadow-box-medium">Добавить кабинет</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
