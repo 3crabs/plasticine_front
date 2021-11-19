@@ -244,7 +244,9 @@
         <div class="col-sm-8">
 
             <h1>Группы</h1>
-            <button class="my_button shadow-box-medium">новая группа</button>
+            <button class="my_button shadow-box-medium"
+                    data-bs-toggle="modal" data-bs-target="#addGroupModal">новая группа
+            </button>
             <div class="card lesson shadow-box-medium">
                 <div class="card-body">
                     <span>Группа 1</span>
@@ -253,6 +255,35 @@
             <div class="card lesson shadow-box-medium">
                 <div class="card-body">
                     <span>Группа 2</span>
+                </div>
+            </div>
+
+            <!-- Add Group Modal -->
+            <div class="modal fade" id="addGroupModal" tabindex="-1" aria-labelledby="addGroupModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addGroupModalLabel">Новая группа</h5>
+                            <button type="button" class="my_button shadow-box-medium close" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="groupName" class="form-label">Название группы</label>
+                                    <input type="text" class="form-control" id="groupName"
+                                           aria-describedby="groupNameHelp">
+                                    <div id="groupNameHelp" class="form-text">Введите номер или название группы</div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="my_button shadow-box-medium">Добавить группу</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
