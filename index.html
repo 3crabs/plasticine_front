@@ -247,14 +247,9 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addGroupModal">новая группа
             </button>
-            <div class="card lesson shadow-box-medium">
+            <div class="card lesson shadow-box-medium" v-for="g in groups">
                 <div class="card-body">
-                    <span>Группа 1</span>
-                </div>
-            </div>
-            <div class="card lesson shadow-box-medium">
-                <div class="card-body">
-                    <span>Группа 2</span>
+                    <span>{{ g.name }}</span>
                 </div>
             </div>
 
@@ -299,14 +294,9 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addSubjectModal">новая дисциплина
             </button>
-            <div class="card lesson shadow-box-medium">
+            <div class="card lesson shadow-box-medium" v-for="s in subjects">
                 <div class="card-body">
-                    <span>Живопись</span>
-                </div>
-            </div>
-            <div class="card lesson shadow-box-medium">
-                <div class="card-body">
-                    <span>Графика</span>
+                    <span>{{ s.name }}</span>
                 </div>
             </div>
 
@@ -377,9 +367,9 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addStudentModal">новый ученик
             </button>
-            <div class="card lesson shadow-box-medium">
+            <div class="card lesson shadow-box-medium" v-for="s in students">
                 <div class="card-body">
-                    <span>Федоров Владимир Васильевич</span>
+                    <span>{{ s.lastname }} {{ s.name }}</span>
                 </div>
             </div>
 
@@ -430,14 +420,9 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addPlaceModal">новый кабинет
             </button>
-            <div class="card lesson shadow-box-medium">
+            <div class="card lesson shadow-box-medium" v-for="p in places">
                 <div class="card-body">
-                    <span>каб. 100</span>
-                </div>
-            </div>
-            <div class="card lesson shadow-box-medium">
-                <div class="card-body">
-                    <span>каб. 101</span>
+                    <span>{{ p.name }}</span>
                 </div>
             </div>
 
@@ -478,7 +463,47 @@
     Vue.createApp({
         data() {
             return {
-                current_menu_item: "schedule"
+                current_menu_item: "schedule",
+                students: [
+                    {
+                        name: "Владимир",
+                        lastname: "Федоров"
+                    },
+                    {
+                        name: "Вячеслав",
+                        lastname: "Нагель"
+                    }
+                ],
+                places: [
+                    {
+                        name: "310"
+                    },
+                    {
+                        name: "311"
+                    }
+                ],
+                subjects: [
+                    {
+                        name: "Живопись"
+                    },
+                    {
+                        name: "Графика"
+                    },
+                    {
+                        name: "Композиция"
+                    }
+                ],
+                groups: [
+                    {
+                        name: "Старшие"
+                    },
+                    {
+                        name: "Средние"
+                    },
+                    {
+                        name: "Младшие"
+                    }
+                ]
             }
         },
         methods: {
