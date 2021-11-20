@@ -25,7 +25,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a v-on:click="reverseMessage('schedule')" class="navbar-brand" href="#">
+        <a v-on:click="onClickMenuItem('schedule')" class="navbar-brand" href="#">
             <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" width="50px" id="blobSvg">
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -44,27 +44,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a v-on:click="reverseMessage('schedule')"
+                <a v-on:click="onClickMenuItem('schedule')"
                    v-bind:class="{ gradient: current_menu_item === 'schedule' }"
                    class="nav-link" href="#"
                    data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Расписание</a>
-                <a v-on:click="reverseMessage('groups')"
+                <a v-on:click="onClickMenuItem('groups')"
                    v-bind:class="{ gradient: current_menu_item === 'groups' }"
                    class="nav-link" href="#"
                    data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Группы</a>
-                <a v-on:click="reverseMessage('subjects')"
+                <a v-on:click="onClickMenuItem('subjects')"
                    v-bind:class="{ gradient: current_menu_item === 'subjects' }"
                    class="nav-link" href="#"
                    data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Дисциплины</a>
-                <a v-on:click="reverseMessage('teachers')"
+                <a v-on:click="onClickMenuItem('teachers')"
                    v-bind:class="{ gradient: current_menu_item === 'teachers' }"
                    class="nav-link" href="#"
                    data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Учителя</a>
-                <a v-on:click="reverseMessage('students')"
+                <a v-on:click="onClickMenuItem('students')"
                    v-bind:class="{ gradient: current_menu_item === 'students' }"
                    class="nav-link" href="#"
                    data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Ученики</a>
-                <a v-on:click="reverseMessage('places')"
+                <a v-on:click="onClickMenuItem('places')"
                    v-bind:class="{ gradient: current_menu_item === 'places' }"
                    class="nav-link" href="#"
                    data-bs-toggle="collapse" data-bs-target=".navbar-collapse.show">Кабинеты</a>
@@ -269,14 +269,16 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="groupName" class="form-label">Название группы</label>
-                                    <input type="text" class="form-control" id="groupName"
+                                    <input v-model.trim="groupName" type="text" class="form-control" id="groupName"
                                            aria-describedby="groupNameHelp">
                                     <div id="groupNameHelp" class="form-text">Введите номер или название группы</div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="my_button shadow-box-medium">Добавить группу</button>
+                            <button v-on:click="onClickAddGroup" type="button" class="my_button shadow-box-medium">
+                                Добавить группу
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -493,6 +495,7 @@
                         name: "Композиция"
                     }
                 ],
+                groupName: "",
                 groups: [
                     {
                         name: "Старшие"
@@ -507,8 +510,14 @@
             }
         },
         methods: {
-            reverseMessage(path) {
+            onClickMenuItem(path) {
                 this.current_menu_item = path
+            },
+            onClickAddGroup() {
+                this.groups.push({
+                    name: this.groupName
+                })
+                this.groupName = ""
             }
         }
     }).mount('#app')
