@@ -148,6 +148,7 @@
                                     </select>
                                 </div>
                             </form>
+                            {{ newLesson }}
                         </div>
                         <div class="modal-footer">
                             <button v-on:click="onClickAddLesson" type="button" class="my_button shadow-box-medium">
@@ -172,12 +173,14 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addGroupModal">новая группа
             </button>
-            <div v-if="groups.length === 0" class="alert alert-light" role="alert">
+            <div v-if="groups.length === 1" class="alert alert-light" role="alert">
                 Групп пока нет =(
             </div>
-            <div class="card lesson shadow-box-medium" v-for="g in groups">
-                <div class="card-body">
-                    <span>{{ g.name }}</span>
+            <div v-for="g in groups">
+                <div v-if="g.id > 0" class="card lesson shadow-box-medium">
+                    <div class="card-body">
+                        <span>{{ g.name }}</span>
+                    </div>
                 </div>
             </div>
 
@@ -224,12 +227,14 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addSubjectModal">новая дисциплина
             </button>
-            <div v-if="subjects.length === 0" class="alert alert-light" role="alert">
+            <div v-if="subjects.length === 1" class="alert alert-light" role="alert">
                 Дисциплин пока нет =(
             </div>
-            <div class="card lesson shadow-box-medium" v-for="s in subjects">
-                <div class="card-body">
-                    <span>{{ s.name }}</span>
+            <div v-for="s in subjects">
+                <div v-if="s.id > 0" class="card lesson shadow-box-medium">
+                    <div class="card-body">
+                        <span>{{ s.name }}</span>
+                    </div>
                 </div>
             </div>
 
@@ -362,12 +367,14 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addPlaceModal">новый кабинет
             </button>
-            <div v-if="places.length === 0" class="alert alert-light" role="alert">
+            <div v-if="places.length === 1" class="alert alert-light" role="alert">
                 Кабинетов пока нет =(
             </div>
-            <div class="card lesson shadow-box-medium" v-for="p in places">
-                <div class="card-body">
-                    <span>{{ p.name }}</span>
+            <div v-for="p in places">
+                <div v-if="p.id > 0" class="card lesson shadow-box-medium">
+                    <div class="card-body">
+                        <span>{{ p.name }}</span>
+                    </div>
                 </div>
             </div>
 
