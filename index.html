@@ -201,7 +201,7 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="groupName" class="form-label">Название группы</label>
-                                    <input v-model.trim="groupName" type="text" class="form-control" id="groupName"
+                                    <input v-model.trim="newGroup.name" type="text" class="form-control" id="groupName"
                                            aria-describedby="groupNameHelp">
                                     <div id="groupNameHelp" class="form-text">Введите номер или название группы</div>
                                 </div>
@@ -255,7 +255,8 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="subjectName" class="form-label">Название дисциплины</label>
-                                    <input v-model.trim="subjectName" type="text" class="form-control" id="subjectName"
+                                    <input v-model.trim="newSubject.name" type="text" class="form-control"
+                                           id="subjectName"
                                            aria-describedby="subjectNameHelp">
                                     <div id="subjectNameHelp" class="form-text">Введите название дисциплины
                                     </div>
@@ -397,7 +398,7 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="placeName" class="form-label">Название кабинета</label>
-                                    <input v-model.trim="placeName" type="text" class="form-control" id="placeName"
+                                    <input v-model.trim="newPlace.name" type="text" class="form-control" id="placeName"
                                            aria-describedby="placeNameHelp">
                                     <div id="placeNameHelp" class="form-text">Введите номер или название кабинета</div>
                                 </div>
@@ -521,7 +522,12 @@
                     groupId: 0
                 },
                 students: [],
-                placeName: "",
+                emptyPlace: {
+                    name: ""
+                },
+                newPlace: {
+                    name: ""
+                },
                 places: [
                     {
                         id: 0,
@@ -536,7 +542,12 @@
                         name: "311"
                     }
                 ],
-                subjectName: "",
+                emptySubject: {
+                    name: ""
+                },
+                newSubject: {
+                    name: ""
+                },
                 subjects: [
                     {
                         id: 0,
@@ -551,7 +562,12 @@
                         name: "Графика"
                     }
                 ],
-                groupName: "",
+                emptyGroup: {
+                    name: ""
+                },
+                newGroup: {
+                    name: ""
+                },
                 groups: [
                     {
                         id: 0,
@@ -590,42 +606,41 @@
             },
             onClickAddGroup() {
                 this.groups.push({
-                    name: this.groupName
+                    id: this.groups.length,
+                    name: this.newGroup.name
                 })
-                this.groupName = ""
+                this.newGroup = this.emptyGroup
             },
             onClickAddPlace() {
                 this.places.push({
-                    name: this.placeName
+                    id: this.places.length,
+                    name: this.newPlace.name
                 })
-                this.placeName = ""
+                this.newPlace = this.emptyPlace
             },
             onClickAddSubject() {
                 this.subjects.push({
-                    name: this.subjectName
+                    id: this.subjects.length,
+                    name: this.newSubject.name
                 })
-                this.subjectName = ""
+                this.newSubject = this.emptySubject
             },
             onClickAddStudent() {
-                this.students.push(
-                    {
-                        name: this.newStudent.name,
-                        lastname: this.newStudent.lastname,
-                        group: this.groups.filter(o => o.id === this.newStudent.groupId)[0]
-                    }
-                )
+                this.students.push({
+                    name: this.newStudent.name,
+                    lastname: this.newStudent.lastname,
+                    group: this.groups.filter(o => o.id === this.newStudent.groupId)[0]
+                })
                 this.newStudent = this.emptyStudent
             },
             onClickAddLesson() {
-                this.days[this.newLessonNumber].lessons.push(
-                    {
-                        time: this.newLesson.time,
-                        group: this.groups.filter(o => o.id === this.newLesson.groupId)[0],
-                        subject: this.subjects.filter(o => o.id === this.newLesson.subjectId)[0],
-                        teacher: this.teachers.filter(o => o.id === this.newLesson.teacherId)[0].name,
-                        place: this.places.filter(o => o.id === this.newLesson.placeId)[0]
-                    }
-                )
+                this.days[this.newLessonNumber].lessons.push({
+                    time: this.newLesson.time,
+                    group: this.groups.filter(o => o.id === this.newLesson.groupId)[0],
+                    subject: this.subjects.filter(o => o.id === this.newLesson.subjectId)[0],
+                    teacher: this.teachers.filter(o => o.id === this.newLesson.teacherId)[0].name,
+                    place: this.places.filter(o => o.id === this.newLesson.placeId)[0]
+                })
                 this.newLessonNumber = 0
                 this.newLesson = this.emptyLesson
             }
