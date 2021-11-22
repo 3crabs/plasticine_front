@@ -101,6 +101,10 @@ h3 {
     margin-right: 10px;
 }
 
+.student-name {
+    margin-right: 10px;
+}
+
 .my_button {
     color: white;
     background: linear-gradient(0, #904E95FF, #E96443FF);
