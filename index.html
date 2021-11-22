@@ -281,13 +281,11 @@
         <div class="col-sm-8">
 
             <h1>Учителя</h1>
-            <div id="teachers-block">
-                <div v-for="t in teachers">
-                    <div v-if="t.id > 0" class="card teacher shadow-box-medium" style="width: 18rem;">
-                        <img v-bind:src="t.image" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text gradient">{{ t.name }}</p>
-                        </div>
+            <div v-for="t in teachers" class="teachers-block">
+                <div v-if="t.id > 0" class="card teacher shadow-box-medium" style="width: 18rem;">
+                    <img v-bind:src="t.image" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text gradient">{{ t.name }}</p>
                     </div>
                 </div>
             </div>
