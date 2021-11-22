@@ -341,10 +341,12 @@
                                            aria-describedby="studentNameHelp">
                                     <div id="studentNameHelp" class="form-text">Введите имя ученика</div>
                                 </div>
-                                <select v-model="newStudent.group" class="form-select" aria-label="Выберите группу">
-                                    <option selected>Выберите группу</option>
-                                    <option v-for="g in groups" v-bind:value="g">{{ g.name }}</option>
-                                </select>
+                                <div class="mb-3">
+                                    <select v-model="newStudent.groupId" class="form-select"
+                                            aria-label="Выберите группу">
+                                        <option v-for="g in groups" v-bind:value="g.id">{{ g.name }}</option>
+                                    </select>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -511,18 +513,12 @@
                 emptyStudent: {
                     name: "",
                     lastname: "",
-                    group: {
-                        id: "",
-                        name: ""
-                    }
+                    groupId: 0
                 },
                 newStudent: {
                     name: "",
                     lastname: "",
-                    group: {
-                        id: "",
-                        name: ""
-                    }
+                    groupId: 0
                 },
                 students: [],
                 placeName: "",
@@ -611,7 +607,13 @@
                 this.subjectName = ""
             },
             onClickAddStudent() {
-                this.students.push(this.newStudent)
+                this.students.push(
+                    {
+                        name: this.newStudent.name,
+                        lastname: this.newStudent.lastname,
+                        group: this.groups.filter(o => o.id === this.newStudent.groupId)[0]
+                    }
+                )
                 this.newStudent = this.emptyStudent
             },
             onClickAddLesson() {
