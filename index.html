@@ -79,9 +79,10 @@
 
             <h1>Расписание</h1>
 
-            <div v-for="d in days">
+            <div v-for="(d, i) in days">
                 <h3>{{ d.name }}
-                    <button class="my_inline_button shadow-box-medium" data-bs-toggle="modal"
+                    <button v-on:click="newLessonNumber = i" class="my_inline_button shadow-box-medium"
+                            data-bs-toggle="modal"
                             data-bs-target="#addLessonModal">
                         новое занятие
                     </button>
@@ -119,7 +120,8 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="lessonTime" class="form-label">Время</label>
-                                    <input v-model.trim="placeName" type="text" class="form-control" id="lessonTime"
+                                    <input v-model.trim="newLesson.time" type="text" class="form-control"
+                                           id="lessonTime"
                                            aria-describedby="lessonTimeHelp">
                                     <div id="lessonTimeHelp" class="form-text">Введите время, например 9:00</div>
                                 </div>
@@ -148,7 +150,6 @@
                                     </select>
                                 </div>
                             </form>
-                            {{ newLesson }}
                         </div>
                         <div class="modal-footer">
                             <button v-on:click="onClickAddLesson" type="button" class="my_button shadow-box-medium">
@@ -418,6 +419,7 @@
         data() {
             return {
                 current_menu_item: "schedule",
+                newLessonNumber: 0,
                 emptyLesson: {
                     time: "",
                     groupId: 0,
@@ -528,6 +530,14 @@
                     {
                         id: 0,
                         name: "Выберите кабинет"
+                    },
+                    {
+                        id: 1,
+                        name: "310"
+                    },
+                    {
+                        id: 2,
+                        name: "311"
                     }
                 ],
                 subjectName: "",
@@ -535,6 +545,14 @@
                     {
                         id: 0,
                         name: "Выберите дисциплину"
+                    },
+                    {
+                        id: 1,
+                        name: "Живопись"
+                    },
+                    {
+                        id: 2,
+                        name: "Графика"
                     }
                 ],
                 groupName: "",
@@ -542,6 +560,14 @@
                     {
                         id: 0,
                         name: "Выберите группу"
+                    },
+                    {
+                        id: 1,
+                        name: "Старшие"
+                    },
+                    {
+                        id: 2,
+                        name: "Средние"
                     }
                 ],
                 teachers: [
@@ -588,8 +614,18 @@
                 this.students.push(this.newStudent)
                 this.newStudent = this.emptyStudent
             },
-            onClickAddLesson(day) {
-                console.log("add " + day)
+            onClickAddLesson() {
+                this.days[this.newLessonNumber].lessons.push(
+                    {
+                        time: this.newLesson.time,
+                        group: this.groups.filter(o => o.id === this.newLesson.groupId)[0],
+                        subject: this.subjects.filter(o => o.id === this.newLesson.subjectId)[0],
+                        teacher: this.teachers.filter(o => o.id === this.newLesson.teacherId)[0].name,
+                        place: this.places.filter(o => o.id === this.newLesson.placeId)[0]
+                    }
+                )
+                this.newLessonNumber = 0
+                this.newLesson = this.emptyLesson
             }
         }
     }).mount('#app')
