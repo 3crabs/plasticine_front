@@ -97,15 +97,21 @@ h3 {
     margin-right: 10px;
 }
 
-.my_button {
+.my_button,.my_inline_button {
+    font-size: 16px;
     color: white;
     background: linear-gradient(0, #904E95FF, #E96443FF);
     border-radius: 5px;
     border: 0;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
     padding-bottom: 3px;
 }
 
-.my_button:hover {
+.my_inline_button {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.my_button:hover,.my_inline_button:hover {
     opacity: 50%;
 }

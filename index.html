@@ -80,7 +80,13 @@
             <h1>Расписание</h1>
 
             <div v-for="d in days">
-                <h3>{{ d.name }}</h3>
+                <h3>{{ d.name }}
+                    <button class="my_inline_button shadow-box-medium" data-bs-toggle="modal"
+                            data-bs-target="#addLessonModal">
+                        новое занятие
+                    </button>
+                </h3>
+
                 <div v-if="d.lessons.length === 0" class="alert alert-light" role="alert">
                     В этот день занятий нет =(
                 </div>
@@ -93,6 +99,61 @@
                         <br>
                         <span class="lesson-teacher">{{ l.teacher }}</span>
                         <span class="lesson-place">{{ l.place.name }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Lesson Modal -->
+            <div class="modal fade" id="addLessonModal" tabindex="-1" aria-labelledby="addLessonModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addLessonModalLabel">Новое занятие</h5>
+                            <button type="button" class="my_button shadow-box-medium close" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="lessonTime" class="form-label">Время</label>
+                                    <input v-model.trim="placeName" type="text" class="form-control" id="lessonTime"
+                                           aria-describedby="lessonTimeHelp">
+                                    <div id="lessonTimeHelp" class="form-text">Введите время, например 9:00</div>
+                                </div>
+                                <div class="mb-3">
+                                    <select v-model="newLesson.groupId" class="form-select"
+                                            aria-label="Выберите группу">
+                                        <option v-for="g in groups" v-bind:value="g.id">{{ g.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <select v-model="newLesson.subjectId" class="form-select"
+                                            aria-label="Выберите дисциплину">
+                                        <option v-for="s in subjects" v-bind:value="s.id">{{ s.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <select v-model="newLesson.placeId" class="form-select"
+                                            aria-label="Выберите кабинет">
+                                        <option v-for="p in places" v-bind:value="p.id">{{ p.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <select v-model="newLesson.teacherId" class="form-select"
+                                            aria-label="Выберите учителя">
+                                        <option v-for="t in teachers" v-bind:value="t.id">{{ t.name }}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button v-on:click="onClickAddLesson" type="button" class="my_button shadow-box-medium">
+                                Добавить занятие
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -111,6 +172,9 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addGroupModal">новая группа
             </button>
+            <div v-if="groups.length === 0" class="alert alert-light" role="alert">
+                Групп пока нет =(
+            </div>
             <div class="card lesson shadow-box-medium" v-for="g in groups">
                 <div class="card-body">
                     <span>{{ g.name }}</span>
@@ -160,6 +224,9 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addSubjectModal">новая дисциплина
             </button>
+            <div v-if="subjects.length === 0" class="alert alert-light" role="alert">
+                Дисциплин пока нет =(
+            </div>
             <div class="card lesson shadow-box-medium" v-for="s in subjects">
                 <div class="card-body">
                     <span>{{ s.name }}</span>
@@ -208,17 +275,12 @@
 
             <h1>Учителя</h1>
             <div id="teachers-block">
-                <div class="card teacher shadow-box-medium" style="width: 18rem;">
-                    <img src="images/Ushakova.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text gradient">Ушакова Ирина Вячеславовна</p>
-                    </div>
-                </div>
-
-                <div class="card teacher shadow-box-medium" style="width: 18rem;">
-                    <img src="images/Riferd.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <p class="card-text gradient">Риферд Регина Сергеевна</p>
+                <div v-for="t in teachers">
+                    <div v-if="t.id > 0" class="card teacher shadow-box-medium" style="width: 18rem;">
+                        <img v-bind:src="t.image" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text gradient">{{ t.name }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -235,6 +297,9 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addStudentModal">новый ученик
             </button>
+            <div v-if="students.length === 0" class="alert alert-light" role="alert">
+                Учеников пока нет =(
+            </div>
             <div class="card lesson shadow-box-medium" v-for="s in students">
                 <div class="card-body">
                     <span class="student-name">{{ s.lastname }} {{ s.name }}</span>
@@ -297,6 +362,9 @@
             <button class="my_button shadow-box-medium"
                     data-bs-toggle="modal" data-bs-target="#addPlaceModal">новый кабинет
             </button>
+            <div v-if="places.length === 0" class="alert alert-light" role="alert">
+                Кабинетов пока нет =(
+            </div>
             <div class="card lesson shadow-box-medium" v-for="p in places">
                 <div class="card-body">
                     <span>{{ p.name }}</span>
@@ -343,6 +411,20 @@
         data() {
             return {
                 current_menu_item: "schedule",
+                emptyLesson: {
+                    time: "",
+                    groupId: 0,
+                    subjectId: 0,
+                    teacherId: 0,
+                    placeId: 0
+                },
+                newLesson: {
+                    time: "",
+                    groupId: 0,
+                    subjectId: 0,
+                    teacherId: 0,
+                    placeId: 0
+                },
                 days: [
                     {
                         name: "Понедельник",
@@ -433,59 +515,43 @@
                         name: ""
                     }
                 },
-                students: [
-                    {
-                        name: "Владимир",
-                        lastname: "Федоров",
-                        group: {
-                            id: 1,
-                            name: "Старшие"
-                        }
-                    },
-                    {
-                        name: "Вячеслав",
-                        lastname: "Нагель",
-                        group: {
-                            id: 2,
-                            name: "Средние"
-                        }
-                    }
-                ],
+                students: [],
                 placeName: "",
                 places: [
                     {
-                        name: "310"
-                    },
-                    {
-                        name: "311"
+                        id: 0,
+                        name: "Выберите кабинет"
                     }
                 ],
                 subjectName: "",
                 subjects: [
                     {
-                        name: "Живопись"
-                    },
-                    {
-                        name: "Графика"
-                    },
-                    {
-                        name: "Композиция"
+                        id: 0,
+                        name: "Выберите дисциплину"
                     }
                 ],
                 groupName: "",
                 groups: [
                     {
+                        id: 0,
+                        name: "Выберите группу"
+                    }
+                ],
+                teachers: [
+                    {
+                        id: 0,
+                        name: "Выберите учителя"
+                    },
+                    {
                         id: 1,
-                        name: "Старшие"
+                        name: "Ушакова Ирина Вячеславовна",
+                        image: "images/Ushakova.jpg"
                     },
                     {
                         id: 2,
-                        name: "Средние"
+                        name: "Риферд Регина Сергеевна",
+                        image: "images/Riferd.jpg"
                     },
-                    {
-                        id: 3,
-                        name: "Младшие"
-                    }
                 ]
             }
         },
@@ -514,6 +580,9 @@
             onClickAddStudent() {
                 this.students.push(this.newStudent)
                 this.newStudent = this.emptyStudent
+            },
+            onClickAddLesson(day) {
+                console.log("add " + day)
             }
         }
     }).mount('#app')
