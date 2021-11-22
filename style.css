@@ -55,19 +55,11 @@ h3 {
 
 .shadow-box-medium {
     box-shadow: var(--shadow-elevation-medium);
-    margin-bottom: 2px;
-}
-
-.shadow-box-medium:hover {
-    box-shadow: var(--shadow-elevation-low);
+    margin-bottom: 5px;
 }
 
 .shadow-box-high {
     box-shadow: var(--shadow-elevation-high);
-}
-
-.lesson {
-    cursor: pointer;
 }
 
 .lesson-time {

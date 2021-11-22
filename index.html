@@ -81,6 +81,10 @@
 
             <div v-for="d in days">
                 <h3>{{ d.name }}</h3>
+                <div v-if="d.lessons.length === 0" class="alert alert-light" role="alert">
+                    В этот день занятий нет =(
+                </div>
+
                 <div v-for="l in d.lessons" class="card lesson shadow-box-medium">
                     <div class="card-body">
                         <span class="lesson-time">{{ l.time }}</span>
@@ -391,7 +395,27 @@
                                 }
                             }
                         ]
-                    }
+                    },
+                    {
+                        name: "Среда",
+                        lessons: [],
+                    },
+                    {
+                        name: "Четверг",
+                        lessons: [],
+                    },
+                    {
+                        name: "Пятница",
+                        lessons: [],
+                    },
+                    {
+                        name: "Суббота",
+                        lessons: [],
+                    },
+                    {
+                        name: "Воскресенье",
+                        lessons: [],
+                    },
                 ],
                 emptyStudent: {
                     name: "",
