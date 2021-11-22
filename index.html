@@ -444,14 +444,16 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="placeName" class="form-label">Название кабинета</label>
-                                    <input type="text" class="form-control" id="placeName"
+                                    <input v-model.trim="placeName" type="text" class="form-control" id="placeName"
                                            aria-describedby="placeNameHelp">
                                     <div id="placeNameHelp" class="form-text">Введите номер или название кабинета</div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="my_button shadow-box-medium">Добавить кабинет</button>
+                            <button v-on:click="onClickAddPlace" type="button" class="my_button shadow-box-medium">
+                                Добавить кабинет
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -476,6 +478,7 @@
                         lastname: "Нагель"
                     }
                 ],
+                placeName: "",
                 places: [
                     {
                         name: "310"
@@ -518,6 +521,12 @@
                     name: this.groupName
                 })
                 this.groupName = ""
+            },
+            onClickAddPlace() {
+                this.places.push({
+                    name: this.placeName
+                })
+                this.placeName = ""
             }
         }
     }).mount('#app')
