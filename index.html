@@ -180,6 +180,7 @@
             <div v-for="g in groups">
                 <div v-if="g.id > 0" class="card lesson shadow-box-medium">
                     <div class="card-body">
+                        <span class="delete-x" v-on:click="deleteGroup(g.id)">x</span>
                         <span>{{ g.name }}</span>
                     </div>
                 </div>
@@ -308,8 +309,8 @@
             </div>
             <div class="card lesson shadow-box-medium" v-for="s in students">
                 <div class="card-body">
-                    <span class="student-name">{{ s.lastname }} {{ s.name }}</span>
-                    <span class="gradient">{{ s.group.name }}</span>
+                    <span class="delete-x" v-on:click="deleteStudent(s.id)">x</span>
+                    <span class="student-name">{{ s.last_name }} {{ s.first_name }}</span>
                 </div>
             </div>
 
@@ -329,20 +330,20 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="studentLastname" class="form-label">Фаилия</label>
-                                    <input v-model.trim="newStudent.lastname" type="text" class="form-control"
+                                    <input v-model.trim="newStudent.last_name" type="text" class="form-control"
                                            id="studentLastname"
                                            aria-describedby="studentLastnameHelp">
                                     <div id="studentLastnameHelp" class="form-text">Введите фамилию ученика</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="studentName" class="form-label">Имя</label>
-                                    <input v-model.trim="newStudent.name" type="text" class="form-control"
+                                    <input v-model.trim="newStudent.first_name" type="text" class="form-control"
                                            id="studentName"
                                            aria-describedby="studentNameHelp">
                                     <div id="studentNameHelp" class="form-text">Введите имя ученика</div>
                                 </div>
                                 <div class="mb-3">
-                                    <select v-model="newStudent.groupId" class="form-select"
+                                    <select v-model="newStudent.group_id" class="form-select"
                                             aria-label="Выберите группу">
                                         <option v-for="g in groups" v-bind:value="g.id">{{ g.name }}</option>
                                     </select>
@@ -424,7 +425,7 @@
                 host: "http://ovz8.vladimir-fodorow.pqj7n.vps.myjino.ru/api",
                 // host: "http://localhost/api",
                 // current_menu_item: "schedule",
-                current_menu_item: "subjects",
+                current_menu_item: "students",
                 newLessonNumber: 0,
                 emptyLesson: {
                     time: "",
@@ -515,14 +516,14 @@
                     },
                 ],
                 emptyStudent: {
-                    name: "",
-                    lastname: "",
-                    groupId: 0
+                    first_name: "",
+                    last_name: "",
+                    group_id: 0
                 },
                 newStudent: {
-                    name: "",
-                    lastname: "",
-                    groupId: 0
+                    first_name: "",
+                    last_name: "",
+                    group_id: 0
                 },
                 students: [],
                 emptyPlace: {
@@ -560,14 +561,6 @@
                         id: 0,
                         name: "Выберите группу"
                     },
-                    {
-                        id: 1,
-                        name: "Старшие"
-                    },
-                    {
-                        id: 2,
-                        name: "Средние"
-                    }
                 ],
                 teachers: [
                     {
@@ -590,8 +583,14 @@
         async mounted() {
             await this.updatePlaces()
             await this.updateSubjects()
+            await this.updateGroups()
+            await this.updateStudents()
         },
         methods: {
+            onClickMenuItem(path) {
+                this.current_menu_item = path
+            },
+
             async updatePlaces() {
                 try {
                     let response = await fetch(this.host + "/places", {
@@ -620,6 +619,36 @@
                     console.error(e)
                 }
             },
+            async updateGroups() {
+                try {
+                    let response = await fetch(this.host + "/groups", {
+                        method: "GET",
+                        headers: {"Content-Type": "application/json"},
+                    })
+                    let groups = await response.json()
+                    console.log(groups)
+                    this.groups = [{id: 0, name: "Выберите группу"}]
+                    this.groups.push(...groups)
+                } catch (e) {
+                    console.error(e)
+                }
+            },
+            async updateStudents() {
+                try {
+                    let response = await fetch(this.host + "/students", {
+                        method: "GET",
+                        headers: {"Content-Type": "application/json"},
+                    })
+                    let students = await response.json()
+                    console.log("students")
+                    console.log(students)
+                    this.students = []
+                    this.students.push(...students)
+                } catch (e) {
+                    console.error(e)
+                }
+            },
+
             async deletePlace(id) {
                 try {
                     await fetch(this.host + "/places/" + id, {
@@ -648,16 +677,35 @@
                     console.error(e)
                 }
             },
-            onClickMenuItem(path) {
-                this.current_menu_item = path
+            async deleteGroup(id) {
+                try {
+                    await fetch(this.host + "/groups/" + id, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Basic ' + btoa("admin:admin")
+                        },
+                    })
+                    await this.updateGroups()
+                } catch (e) {
+                    console.error(e)
+                }
             },
-            onClickAddGroup() {
-                this.groups.push({
-                    id: this.groups.length,
-                    name: this.newGroup.name
-                })
-                this.newGroup = this.emptyGroup
+            async deleteStudent(id) {
+                try {
+                    await fetch(this.host + "/users/" + id, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Basic ' + btoa("admin:admin")
+                        },
+                    })
+                    await this.updateStudents()
+                } catch (e) {
+                    console.error(e)
+                }
             },
+
             async onClickAddPlace() {
                 let place = {
                     name: this.newPlace.name
@@ -696,13 +744,46 @@
                     console.error(e)
                 }
             },
-            onClickAddStudent() {
-                this.students.push({
-                    name: this.newStudent.name,
-                    lastname: this.newStudent.lastname,
-                    group: this.groups.filter(o => o.id === this.newStudent.groupId)[0]
-                })
+            async onClickAddGroup() {
+                let group = {
+                    name: this.newGroup.name
+                }
+                this.newGroup = this.emptyGroup
+                try {
+                    await fetch(this.host + "/groups", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Basic ' + btoa("admin:admin")
+                        },
+                        body: JSON.stringify(group)
+                    })
+                    await this.updateGroups()
+                } catch (e) {
+                    console.error(e)
+                }
+            },
+            async onClickAddStudent() {
+                let student = {
+                    first_name: this.newStudent.first_name,
+                    last_name: this.newStudent.last_name,
+                    group_id: this.newStudent.group_id,
+                    role: "STUDENT"
+                }
                 this.newStudent = this.emptyStudent
+                try {
+                    await fetch(this.host + "/users", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Basic ' + btoa("admin:admin")
+                        },
+                        body: JSON.stringify(student)
+                    })
+                    await this.updateStudents()
+                } catch (e) {
+                    console.error(e)
+                }
             },
             onClickAddLesson() {
                 this.days[this.newLessonNumber].lessons.push({
