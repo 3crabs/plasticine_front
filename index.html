@@ -531,14 +531,6 @@
                         id: 0,
                         name: "Выберите кабинет"
                     },
-                    {
-                        id: 1,
-                        name: "310"
-                    },
-                    {
-                        id: 2,
-                        name: "311"
-                    }
                 ],
                 emptySubject: {
                     name: ""
@@ -598,6 +590,20 @@
                 ]
             }
         },
+        async mounted() {
+            const host = "http://localhost:8080/api"
+            try {
+                let response = await fetch(host + "/places", {
+                    method: "GET",
+                    headers: {"Content-Type": "application/json"},
+                })
+                let places = await response.json()
+                console.log(places)
+                this.places = places
+            } catch (e) {
+                console.error(e)
+            }
+        },
         methods: {
             onClickMenuItem(path) {
                 this.current_menu_item = path
@@ -609,12 +615,39 @@
                 })
                 this.newGroup = this.emptyGroup
             },
-            onClickAddPlace() {
-                this.places.push({
+            async onClickAddPlace() {
+                let place = {
                     id: this.places.length,
                     name: this.newPlace.name
-                })
+                }
                 this.newPlace = this.emptyPlace
+
+                const host = "http://localhost:8080/api"
+                try {
+                    await fetch(host + "/places", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Basic ' + btoa("admin:admin")
+                        },
+                        body: JSON.stringify(place)
+                    })
+                    try {
+                        let response = await fetch(host + "/places", {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        })
+                        let places = await response.json()
+                        console.log(places)
+                        this.places = places
+                    } catch (e) {
+                        console.error(e)
+                    }
+                } catch (e) {
+                    console.error(e)
+                }
             },
             onClickAddSubject() {
                 this.subjects.push({
