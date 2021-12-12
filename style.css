@@ -115,3 +115,15 @@ h3 {
 .my_button:hover,.my_inline_button:hover {
     opacity: 50%;
 }
+
+.delete-x {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    color: #ababab;
+}
+
+.delete-x:hover {
+    cursor: pointer;
+    color: #676767;
+}

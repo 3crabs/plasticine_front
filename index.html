@@ -234,6 +234,7 @@
             <div v-for="s in subjects">
                 <div v-if="s.id > 0" class="card lesson shadow-box-medium">
                     <div class="card-body">
+                        <span class="delete-x" v-on:click="deleteSubject(s.id)">x</span>
                         <span>{{ s.name }}</span>
                     </div>
                 </div>
@@ -375,6 +376,7 @@
             <div v-for="p in places">
                 <div v-if="p.id > 0" class="card lesson shadow-box-medium">
                     <div class="card-body">
+                        <span class="delete-x" v-on:click="deletePlace(p.id)">x</span>
                         <span>{{ p.name }}</span>
                     </div>
                 </div>
@@ -419,7 +421,10 @@
     Vue.createApp({
         data() {
             return {
-                current_menu_item: "schedule",
+                host: "http://ovz8.vladimir-fodorow.pqj7n.vps.myjino.ru/api",
+                // host: "http://localhost/api",
+                // current_menu_item: "schedule",
+                current_menu_item: "subjects",
                 newLessonNumber: 0,
                 emptyLesson: {
                     time: "",
@@ -542,14 +547,6 @@
                     {
                         id: 0,
                         name: "Выберите дисциплину"
-                    },
-                    {
-                        id: 1,
-                        name: "Живопись"
-                    },
-                    {
-                        id: 2,
-                        name: "Графика"
                     }
                 ],
                 emptyGroup: {
@@ -591,20 +588,66 @@
             }
         },
         async mounted() {
-            const host = "http://localhost:8080/api"
-            try {
-                let response = await fetch(host + "/places", {
-                    method: "GET",
-                    headers: {"Content-Type": "application/json"},
-                })
-                let places = await response.json()
-                console.log(places)
-                this.places = places
-            } catch (e) {
-                console.error(e)
-            }
+            await this.updatePlaces()
+            await this.updateSubjects()
         },
         methods: {
+            async updatePlaces() {
+                try {
+                    let response = await fetch(this.host + "/places", {
+                        method: "GET",
+                        headers: {"Content-Type": "application/json"},
+                    })
+                    let places = await response.json()
+                    console.log(places)
+                    this.places = [{id: 0, name: "Выберите кабинет"}]
+                    this.places.push(...places)
+                } catch (e) {
+                    console.error(e)
+                }
+            },
+            async updateSubjects() {
+                try {
+                    let response = await fetch(this.host + "/subjects", {
+                        method: "GET",
+                        headers: {"Content-Type": "application/json"},
+                    })
+                    let subjects = await response.json()
+                    console.log(subjects)
+                    this.subjects = [{id: 0, name: "Выберите дисциплину"}]
+                    this.subjects.push(...subjects)
+                } catch (e) {
+                    console.error(e)
+                }
+            },
+            async deletePlace(id) {
+                try {
+                    await fetch(this.host + "/places/" + id, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Basic ' + btoa("admin:admin")
+                        },
+                    })
+                    await this.updatePlaces()
+                } catch (e) {
+                    console.error(e)
+                }
+            },
+            async deleteSubject(id) {
+                try {
+                    await fetch(this.host + "/subjects/" + id, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Basic ' + btoa("admin:admin")
+                        },
+                    })
+                    await this.updateSubjects()
+                } catch (e) {
+                    console.error(e)
+                }
+            },
             onClickMenuItem(path) {
                 this.current_menu_item = path
             },
@@ -617,14 +660,11 @@
             },
             async onClickAddPlace() {
                 let place = {
-                    id: this.places.length,
                     name: this.newPlace.name
                 }
                 this.newPlace = this.emptyPlace
-
-                const host = "http://localhost:8080/api"
                 try {
-                    await fetch(host + "/places", {
+                    await fetch(this.host + "/places", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -632,29 +672,29 @@
                         },
                         body: JSON.stringify(place)
                     })
-                    try {
-                        let response = await fetch(host + "/places", {
-                            method: "GET",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                        })
-                        let places = await response.json()
-                        console.log(places)
-                        this.places = places
-                    } catch (e) {
-                        console.error(e)
-                    }
+                    await this.updatePlaces()
                 } catch (e) {
                     console.error(e)
                 }
             },
-            onClickAddSubject() {
-                this.subjects.push({
-                    id: this.subjects.length,
+            async onClickAddSubject() {
+                let subject = {
                     name: this.newSubject.name
-                })
+                }
                 this.newSubject = this.emptySubject
+                try {
+                    await fetch(this.host + "/subjects", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": 'Basic ' + btoa("admin:admin")
+                        },
+                        body: JSON.stringify(subject)
+                    })
+                    await this.updateSubjects()
+                } catch (e) {
+                    console.error(e)
+                }
             },
             onClickAddStudent() {
                 this.students.push({
